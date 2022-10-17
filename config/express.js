@@ -5,6 +5,8 @@ const consign = require('consign');
 
 module.exports = () => {
   const app = express();
+  const cors = require("cors");
+  app.use(cors());
 
   // SETANDO VARIÁVEIS DA APLICAÇÃO
   app.set('port', process.env.PORT || config.get('server.port'));

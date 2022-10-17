@@ -7,8 +7,8 @@ module.exports = app => {
     controller.listdataUser = (req, res) => res.status(200).json(dataUserDB);
 
     controller.storeUser = (req, res) => {
-        dataUserDB.users.data.push({
-          id: uuid.v4(),
+        dataUserDB.users.push({
+          id: uuid.v4(), 
           first_name: req.body.first_name,
           last_name: req.body.last_name,
           email: req.body.email,
@@ -19,7 +19,7 @@ module.exports = app => {
           country: req.body.country
         });
     
-        res.status(201).json(dataUserDB.users.data);
+        res.status(201).json(dataUserDB.users);
     };
 
     controller.updateUser = (req, res) => {
@@ -27,7 +27,7 @@ module.exports = app => {
           userId,
         } = req.params;
 
-        dataUserDB.users.data.map(function(item, index){
+        dataUserDB.users.map(function(item, index){
             console.log('item.id',item.id,userId)
             if (item.id == userId) {
                 const newUser = {
@@ -42,12 +42,12 @@ module.exports = app => {
                     country: req.body.country
                 };
                   
-                dataUserDB.users.data.splice(index, 1, newUser);
+                dataUserDB.users.splice(index, 1, newUser);
                   
                 res.status(200).json({
                     message: 'Usuário encontrado e atualizado com sucesso!',
                     success: true,
-                    dataUser: dataUserDB.users.data
+                    dataUser: dataUserDB.users
                 });  
             } 
         });
@@ -55,7 +55,7 @@ module.exports = app => {
         res.status(404).json({
             message: 'Usuário não encontrado na base.',
             success: false,
-            dataUser: dataUserDB.users.data
+            dataUser: dataUserDB.users
         });
     
     };
@@ -65,13 +65,13 @@ module.exports = app => {
           userId,
         } = req.params;
 
-        dataUserDB.users.data.map(function(item, index){
+        dataUserDB.users.map(function(item, index){
             if (item.id == userId) {
-                dataUserDB.users.data.splice(index, 1);
+                dataUserDB.users.splice(index, 1);
                 res.status(200).json({
                     message: 'Usuário encontrado e deletado com sucesso!',
                     success: true,
-                    dataUser: dataUserDB.users.data,
+                    dataUser: dataUserDB.users,
                 });
             }
         });
@@ -79,7 +79,7 @@ module.exports = app => {
         res.status(404).json({
             message: 'Usuário não encontrado na base.',
             success: false,
-            dataUser: dataUserDB.users.data,
+            dataUser: dataUserDB.users,
         });
     };
   
